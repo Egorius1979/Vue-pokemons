@@ -2,13 +2,11 @@
   <div class="main-page">
     <div class="welcome">
       <h2>Welcome to the</h2>
-      <img src="../assets/Pokémon_logo1.png" alt="" class="poke-logo">
+      <img src="../assets/Pokémon_logo1.png" alt="" class="poke-logo" />
       <h2>page, guys!!!</h2>
     </div>
     <router-link to="/list">
-      <button class="enter-btn">
-        Enter 18+
-      </button>
+      <button class="enter-btn">Enter 18+</button>
     </router-link>
   </div>
 </template>
@@ -54,5 +52,4 @@ export default {
     color: darkred;
   }
 }
-
 </style>

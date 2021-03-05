@@ -6,11 +6,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    pokesPerRage: 15,
     pokemonsList: [],
+    totalPages: 0,
   },
   mutations: {
     GET_POKEMONS(state, data) {
       state.pokemonsList = data;
+      state.totalPages = Math.ceil(data.totalCount / state.pokesPerRage);
     },
   },
   actions: {

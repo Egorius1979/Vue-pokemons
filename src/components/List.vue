@@ -1,14 +1,20 @@
 <template>
-  <div class="cards">
-    <div v-for="poke in pokemonsList" :key="poke.id" class="card">
-      <img :src="poke.images.small" alt="">
-      <p>{{ poke.name }}</p>
+  <div>
+    <div class="cards">
+      <div v-for="poke in pokemonsList" :key="poke.id" class="card">
+        <img :src="poke.images.small" alt=""/>
+        <p>{{ poke.name }}</p>
+      </div>
     </div>
+    <pagination/>
   </div>
 </template>
 
 <script>
+import Pagination from './Pagination.vue';
+
 export default {
+  components: { Pagination },
   name: 'ListPage',
   created() {
     return this.$store.dispatch('getPokemonList');
@@ -32,5 +38,4 @@ export default {
     margin-right: 10px;
   }
 }
-
 </style>
