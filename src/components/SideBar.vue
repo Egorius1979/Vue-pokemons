@@ -1,19 +1,20 @@
 <template>
   <div class="sidebar shadow p-3 mb-5 bg-info rounded">
-    <b-form-select v-model="type">
-        <b-form-select-option :value="null" disabled>
-          -- Please select type --
-        </b-form-select-option>
+
+    <b-form-select v-model="typeSelected" id="type">
+      <b-form-select-option :value="null" disabled>
+        -- Please select type --
+      </b-form-select-option>
       <b-form-select-option
         v-for="(type, index) in typesList"
         :key="index"
         :value="type"
       >
-        {{type}}
+        {{ type }}
       </b-form-select-option>
     </b-form-select>
 
-    <b-form-select v-model="subtype" class="mt-3">
+    <b-form-select v-model="subtypeSelected" class="mt-3" id="subtype">
       <b-form-select-option :value="null" disabled>
         -- Please select subtype --
       </b-form-select-option>
@@ -22,9 +23,10 @@
         :key="index"
         :value="subtype"
       >
-        {{subtype}}
+        {{ subtype }}
       </b-form-select-option>
     </b-form-select>
+
   </div>
 </template>
 
@@ -33,8 +35,8 @@ export default {
   name: 'SideBar',
   data() {
     return {
-      type: null,
-      subtype: null,
+      typeSelected: null,
+      subtypeSelected: null,
     };
   },
   computed: {
