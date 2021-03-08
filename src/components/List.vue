@@ -3,7 +3,7 @@
     <div class="list-sidebar">
       <div class="cards">
         <div v-for="poke in pokemonsList" :key="poke.id" class="card">
-          <img :src="poke.images.small" alt="" class="poke-img"/>
+          <img :src="poke.imageUrl" alt="" class="poke-img"/>
           <p>{{ poke.name }}</p>
         </div>
       </div>
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     pokemonsList() {
-      return this.$store.state.pokemonsList.data;
+      return this.$store.state.pokemonsList.cards;
     },
   },
 };

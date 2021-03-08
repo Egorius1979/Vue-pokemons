@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar shadow p-3 mb-5 bg-info rounded">
 
-    <b-form-select v-model="typeSelected" id="type">
+    <b-form-select v-model="typeSelected" id="type" @change="setCurrentType">
       <b-form-select-option :value="null" disabled>
         -- Please select type --
       </b-form-select-option>
@@ -13,8 +13,9 @@
         {{ type }}
       </b-form-select-option>
     </b-form-select>
+    {{currentType}}
 
-    <b-form-select v-model="subtypeSelected" class="mt-3" id="subtype">
+    <b-form-select v-model="subtypeSelected" class="mt-3" id="subtype" @change="setCurrentSubType">
       <b-form-select-option :value="null" disabled>
         -- Please select subtype --
       </b-form-select-option>
@@ -26,6 +27,7 @@
         {{ subtype }}
       </b-form-select-option>
     </b-form-select>
+    {{currentSubType}}
 
   </div>
 </template>
@@ -41,10 +43,24 @@ export default {
   },
   computed: {
     typesList() {
-      return this.$store.state.types.data;
+      return this.$store.state.types;
     },
     subTypesList() {
-      return this.$store.state.subtypes.data;
+      return this.$store.state.subtypes;
+    },
+    currentType() {
+      return this.$store.state.selectedType;
+    },
+    currentSubType() {
+      return this.$store.state.selectedSubtype;
+    },
+  },
+  methods: {
+    setCurrentType() {
+      return this.$store.commit('SET_TYPE', this.typeSelected);
+    },
+    setCurrentSubType() {
+      return this.$store.commit('SET_SUBTYPE', this.subtypeSelected);
     },
   },
 };
