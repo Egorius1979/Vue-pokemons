@@ -1,10 +1,10 @@
 <template>
   <div class="pagination">
-    <button @click="toStart">На первую</button>
-    <button @click="prev">Назад</button>
-    <button @click="next">Вперёд</button>
-    <button @click="toEnd">В конец</button>
-    {{ currentPage }} {{ maxPage }}
+    <b-button variant="success" @click="toStart">На первую</b-button>
+    <b-button variant="outline-primary" @click="prev">Назад</b-button>
+    <b-button variant="outline-primary" @click="next">Вперёд</b-button>
+    <b-button variant="success" @click="toEnd">В конец</b-button>
+    <!--    {{ currentPage }} {{ maxPage }}-->
   </div>
 </template>
 
@@ -27,24 +27,24 @@ export default {
       return this.$store.dispatch('getPokemonList', page);
     },
     toStart() {
-      this.getNewPage(1);
+      if (this.currentPage > 1) {
+        this.getNewPage(1);
+      }
     },
     prev() {
       if (this.currentPage > 1) {
         this.getNewPage(this.currentPage - 1);
-      } else {
-        this.getNewPage(1);
       }
     },
     next() {
       if (this.currentPage < this.maxPage) {
         this.getNewPage(this.currentPage + 1);
-      } else {
-        this.getNewPage(this.maxPage);
       }
     },
     toEnd() {
-      this.getNewPage(this.maxPage);
+      if (this.currentPage < this.maxPage) {
+        this.getNewPage(this.maxPage);
+      }
     },
   },
 };
@@ -52,11 +52,13 @@ export default {
 
 <style lang='scss' scoped>
 .pagination {
-  margin: 30px 0;
-}
+  display: inline-block;
+  margin: 30px auto;
 
-button {
-  font-size: 20px;
-  margin-right: 10px;
+  button {
+    font-size: 16px;
+    margin-right: 10px;
+    width: 150px;
+  }
 }
 </style>

@@ -43,11 +43,11 @@ export default {
   padding: 20px 60px;
   font-size: 56px;
   outline: black;
-  border: 1px solid darkred;
+  border: 3px solid darkred;
   background-color: #4dc0b5;
 
   &:hover {
-    background-color: greenyellow;
+    background-color: #7FFFD4;
     border: 10px solid rebeccapurple;
     color: darkred;
   }
