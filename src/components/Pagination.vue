@@ -13,40 +13,40 @@ export default {
   name: 'Pagination',
   data() {
     return {
-      currentPage: 1,
+      // currentPage: 1,
     };
   },
   computed: {
     maxPage() {
       return this.$store.state.totalPages;
     },
+    currentPage() {
+      return this.$store.state.currentPage;
+    },
   },
   methods: {
     getNewPage(page) {
-      return this.$store.dispatch('getPokemonList', page);
+      this.$store.commit('SET_PAGE', page);
+      this.$store.dispatch('getPokemonList');
     },
     toStart() {
       if (this.currentPage > 1) {
-        this.currentPage = 1;
-        this.getNewPage(this.currentPage);
+        this.getNewPage(1);
       }
     },
     prev() {
       if (this.currentPage > 1) {
-        this.currentPage -= 1;
-        this.getNewPage(this.currentPage);
+        this.getNewPage(this.currentPage -= 1);
       }
     },
     next() {
       if (this.currentPage < this.maxPage) {
-        this.currentPage += 1;
-        this.getNewPage(this.currentPage);
+        this.getNewPage(this.currentPage += 1);
       }
     },
     toEnd() {
       if (this.currentPage < this.maxPage) {
-        this.currentPage = this.maxPage;
-        this.getNewPage(this.currentPage);
+        this.getNewPage(this.maxPage);
       }
     },
   },

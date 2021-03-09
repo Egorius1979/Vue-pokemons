@@ -11,10 +11,11 @@ export default new Vuex.Store({
     pokesPerPage: 12,
     pokemonsList: [],
     totalPages: 0,
+    currentPage: 1,
     types: [],
     subtypes: [],
-    selectedType: '',
-    selectedSubtype: '',
+    selectedType: null,
+    selectedSubtype: null,
   },
   mutations: {
     GET_POKEMONS(state, res) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     GET_SUBTYPES(state, data) {
       state.subtypes = data.subtypes.sort();
     },
+    SET_PAGE(state, page) {
+      state.currentPage = page;
+    },
     SET_TYPE(state, type) {
       state.selectedType = type;
     },
@@ -35,13 +39,13 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getPokemonList({ state, commit }, page) {
+    getPokemonList({ state, commit }) {
       return axios(`${url}/cards`, {
         params: {
           pageSize: 12,
-          page: page || 1,
+          page: state.currentPage,
           types: state.selectedType,
-          subtypes: state.selectedSubtype,
+          subtype: state.selectedSubtype,
         },
       }).then((res) => commit('GET_POKEMONS', res));
     },

@@ -15,6 +15,21 @@ const routes = [
     name: 'ListPage',
     component: () => import('../components/List'),
   },
+  {
+    path: '/list/:currentType',
+    name: 'typePageFiltered',
+    component: () => import('../components/List'),
+  },
+  {
+    path: '/list/:currentSubType',
+    name: 'subtypePageFiltered',
+    component: () => import('../components/List'),
+  },
+  {
+    path: '/list/:currentType/:currentSubType',
+    name: 'bothTypesPageFiltered',
+    component: () => import('../components/List'),
+  },
   // {
   //   path: '/about',
   //   name: 'About',

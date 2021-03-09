@@ -27,9 +27,33 @@ export default {
       this.$store.dispatch('getSubTypes'),
     ]);
   },
+  // mounted: {
+  //   newFilterdList() {
+  //     return this.$store.dispatch('getPokemonList');
+  //   },
+  // },
   computed: {
     pokemonsList() {
       return this.$store.state.pokemonsList.cards;
+    },
+    // currentType() {
+    //   // this.newFilterdList();
+    //   return this.$store.state.selectedType;
+    // },
+    // currentSubType() {
+    //   // this.newFilterdList();
+    //   return this.$store.state.selectedSubtype;
+    // },
+  },
+  methods: {
+    newFilterdList() {
+      this.$store.commit('SET_PAGE', 1);
+      this.$store.dispatch('getPokemonList');
+    },
+  },
+  watch: {
+    $route() {
+      this.newFilterdList();
     },
   },
 };
