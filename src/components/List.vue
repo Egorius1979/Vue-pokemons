@@ -3,7 +3,7 @@
     <div class="list-sidebar">
       <div class="cards">
         <div v-for="poke in pokemonsList" :key="poke.id" class="card">
-          <img :src="poke.images.small" alt="" class="poke-img"/>
+          <img :src="poke.imageUrl" alt="" class="poke-img"/>
           <p>{{ poke.name }}</p>
         </div>
       </div>
@@ -27,9 +27,33 @@ export default {
       this.$store.dispatch('getSubTypes'),
     ]);
   },
+  // mounted: {
+  //   newFilterdList() {
+  //     return this.$store.dispatch('getPokemonList');
+  //   },
+  // },
   computed: {
     pokemonsList() {
-      return this.$store.state.pokemonsList.data;
+      return this.$store.state.pokemonsList.cards;
+    },
+    // currentType() {
+    //   // this.newFilterdList();
+    //   return this.$store.state.selectedType;
+    // },
+    // currentSubType() {
+    //   // this.newFilterdList();
+    //   return this.$store.state.selectedSubtype;
+    // },
+  },
+  methods: {
+    newFilterdList() {
+      this.$store.commit('SET_PAGE', 1);
+      this.$store.dispatch('getPokemonList');
+    },
+  },
+  watch: {
+    $route() {
+      this.newFilterdList();
     },
   },
 };

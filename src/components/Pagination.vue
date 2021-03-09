@@ -4,7 +4,7 @@
     <b-button variant="outline-primary" @click="prev">Назад</b-button>
     <b-button variant="outline-primary" @click="next">Вперёд</b-button>
     <b-button variant="success" @click="toEnd">В конец</b-button>
-    <!--    {{ currentPage }} {{ maxPage }}-->
+        {{ currentPage }} {{ maxPage }}
   </div>
 </template>
 
@@ -12,19 +12,22 @@
 export default {
   name: 'Pagination',
   data() {
-    return {};
+    return {
+      // currentPage: 1,
+    };
   },
   computed: {
-    currentPage() {
-      return this.$store.state.pokemonsList.page;
-    },
     maxPage() {
       return this.$store.state.totalPages;
+    },
+    currentPage() {
+      return this.$store.state.currentPage;
     },
   },
   methods: {
     getNewPage(page) {
-      return this.$store.dispatch('getPokemonList', page);
+      this.$store.commit('SET_PAGE', page);
+      this.$store.dispatch('getPokemonList');
     },
     toStart() {
       if (this.currentPage > 1) {
@@ -33,12 +36,12 @@ export default {
     },
     prev() {
       if (this.currentPage > 1) {
-        this.getNewPage(this.currentPage - 1);
+        this.getNewPage(this.currentPage -= 1);
       }
     },
     next() {
       if (this.currentPage < this.maxPage) {
-        this.getNewPage(this.currentPage + 1);
+        this.getNewPage(this.currentPage += 1);
       }
     },
     toEnd() {
