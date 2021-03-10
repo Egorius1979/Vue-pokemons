@@ -39,13 +39,13 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getPokemonList({ state, commit }) {
+    getPokemonList({ state, commit }, type, subtype) {
       return axios(`${url}/cards`, {
         params: {
           pageSize: 12,
           page: state.currentPage,
-          types: state.selectedType,
-          subtype: state.selectedSubtype,
+          types: state.selectedType || type,
+          subtype: state.selectedSubtype || subtype,
         },
       }).then((res) => commit('GET_POKEMONS', res));
     },
