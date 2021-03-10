@@ -1,32 +1,31 @@
 <template>
   <div class="sidebar shadow p-3 mb-5 bg-info rounded">
 
-    <b-form-select v-model="typeSelected"
-                   id="type"
+    <b-form-select id="type"
+                   v-model="typeSelected"
                    @change="setCurrentType"
                    :options="typesList"
     >
       <template #first>
         <b-form-select-option :value="null" disabled>
-          -- Please select an option --
+          -- Please select type --
         </b-form-select-option>
       </template>
-
     </b-form-select>
-    {{ typeSelected }}
 
-    <b-form-select v-model="subtypeSelected"
-                   class="mt-3" id="subtype"
+    <b-form-select id="subtype"
+                   v-model="subtypeSelected"
+                   class="mt-3"
                    @change="setCurrentSubType"
                    :options="subTypesList"
     >
       <template #first>
         <b-form-select-option :value="null" disabled>
-          -- Please select an option --
+          -- Please select subtype --
         </b-form-select-option>
       </template>
     </b-form-select>
-    {{ subtypeSelected }}
+
   </div>
 </template>
 
@@ -35,19 +34,22 @@ export default {
   name: 'SideBar',
   data() {
     return {
-      typeSelected: null,
-      subtypeSelected: null,
+      typeSelected: this.$route.params.currentType || null,
+      subtypeSelected: this.$route.params.currentSubType || null,
     };
   },
+  beforeCreate() {
+    return Promise.all([
+      this.$store.dispatch('getType'),
+      this.$store.dispatch('getSubTypes'),
+    ]);
+  },
   beforeMount() {
-    this.typeSelected = this.typesList
-      .filter((it) => it === this.$route.params.currentType).length
-      ? this.$route.params.currentType : null;
-    // return this.$store.state.selectedType;
-    this.subtypeSelected = this.subTypesList
-      .filter((it) => it === this.$route.params.currentSubType).length
-      ? this.$route.params.currentSubType : null;
-    // return this.$store.state.selectedSubtype;
+    this.$store.commit('SET_TYPE', this.$route.params.currentType);
+    this.$store.commit('SET_SUBTYPE', this.$route.params.currentSubType);
+  },
+  mounted() {
+    this.$store.dispatch('getPokemonList');
   },
   computed: {
     typesList() {
@@ -60,12 +62,7 @@ export default {
   methods: {
     setCurrentType() {
       this.$store.commit('SET_TYPE', this.typeSelected);
-
-      // if (!this.subtypeSelected && !this.typeSelected) {
-      //   this.$router.push({
-      //     name: 'ListPage',
-      //   });
-      // }
+      this.$store.commit('SET_PAGE', 1);
 
       if (!this.subtypeSelected) {
         this.$router.push({
@@ -81,15 +78,11 @@ export default {
           },
         });
       }
+      this.$store.dispatch('getPokemonList');
     },
     setCurrentSubType() {
       this.$store.commit('SET_SUBTYPE', this.subtypeSelected);
-
-      // if (!this.subtypeSelected && !this.typeSelected) {
-      //   this.$router.push({
-      //     name: 'ListPage',
-      //   });
-      // }
+      this.$store.commit('SET_PAGE', 1);
 
       if (!this.typeSelected) {
         this.$router.push({
@@ -105,6 +98,7 @@ export default {
           },
         });
       }
+      this.$store.dispatch('getPokemonList');
     },
   },
 };

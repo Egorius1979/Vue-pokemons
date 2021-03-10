@@ -16,17 +16,17 @@ const routes = [
     component: () => import('../components/List'),
   },
   {
-    path: '/list/:currentType',
+    path: '/list/type=:currentType',
     name: 'typePageFiltered',
     component: () => import('../components/List'),
   },
   {
-    path: '/list/:currentSubType',
+    path: '/list/subtype=:currentSubType',
     name: 'subtypePageFiltered',
     component: () => import('../components/List'),
   },
   {
-    path: '/list/:currentType/:currentSubType',
+    path: '/list/type=:currentType/subtype=:currentSubType',
     name: 'bothTypesPageFiltered',
     component: () => import('../components/List'),
   },
