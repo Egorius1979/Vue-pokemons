@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'SideBar',
   data() {
@@ -78,6 +79,7 @@ export default {
           },
         });
       }
+
       this.$store.dispatch('getPokemonList');
     },
     setCurrentSubType() {
@@ -98,6 +100,7 @@ export default {
           },
         });
       }
+
       this.$store.dispatch('getPokemonList');
     },
   },

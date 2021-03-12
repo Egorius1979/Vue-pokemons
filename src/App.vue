@@ -14,9 +14,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: lightslategray;
+  background-color: #8B4513;
   width: 100vw;
-  height: 100vh;
+  height: 92vh;
   margin: auto;
   @media (min-width: 1440px) {
     width: 70vw;

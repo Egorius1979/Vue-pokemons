@@ -16,11 +16,13 @@ export default new Vuex.Store({
     subtypes: [],
     selectedType: null,
     selectedSubtype: null,
+    hasLoaded: false,
   },
   mutations: {
     GET_POKEMONS(state, res) {
       state.pokemonsList = res.data;
       state.totalPages = Math.ceil(res.headers['total-count'] / state.pokesPerPage);
+      state.hasLoaded = true;
     },
     GET_TYPES(state, data) {
       state.types = data.types.sort();
@@ -37,9 +39,13 @@ export default new Vuex.Store({
     SET_SUBTYPE(state, subtype) {
       state.selectedSubtype = subtype;
     },
+    IS_LOADING(state) {
+      state.hasLoaded = false;
+    },
   },
   actions: {
     getPokemonList({ state, commit }, type, subtype) {
+      commit('IS_LOADING');
       return axios(`${url}/cards`, {
         params: {
           pageSize: 12,

@@ -4,7 +4,8 @@
     <b-button variant="outline-primary" @click="prev">Назад</b-button>
     <b-button variant="outline-primary" @click="next">Вперёд</b-button>
     <b-button variant="success" @click="toEnd">В конец</b-button>
-        {{ currentPage }} {{ maxPage }}
+    currentPage:  {{ currentPage }}
+    totalPages: {{ maxPage }}
   </div>
 </template>
 
@@ -56,7 +57,7 @@ export default {
 <style lang='scss' scoped>
 .pagination {
   display: inline-block;
-  margin: 30px auto;
+  margin: 30px auto 10px;
 
   button {
     font-size: 16px;
