@@ -17,18 +17,23 @@ const routes = [
   },
   {
     path: '/list/type=:currentType',
-    name: 'typePageFiltered',
+    name: 'TypePageFiltered',
     component: () => import('../components/List'),
   },
   {
     path: '/list/subtype=:currentSubType',
-    name: 'subtypePageFiltered',
+    name: 'SubtypePageFiltered',
     component: () => import('../components/List'),
   },
   {
     path: '/list/type=:currentType/subtype=:currentSubType',
-    name: 'bothTypesPageFiltered',
+    name: 'BothTypesPageFiltered',
     component: () => import('../components/List'),
+  },
+  {
+    path: '/:id',
+    name: 'DetailsPage',
+    component: () => import('../components/DetailsPage'),
   },
   // {
   //   path: '/about',

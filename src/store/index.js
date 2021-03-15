@@ -17,6 +17,7 @@ export default new Vuex.Store({
     selectedType: null,
     selectedSubtype: null,
     hasLoaded: false,
+    pokeCard: {},
   },
   mutations: {
     GET_POKEMONS(state, res) {
@@ -42,6 +43,10 @@ export default new Vuex.Store({
     IS_LOADING(state) {
       state.hasLoaded = false;
     },
+    GET_CARD(state, poke) {
+      state.pokeCard = poke.card;
+      state.hasLoaded = true;
+    },
   },
   actions: {
     getPokemonList({ state, commit }, type, subtype) {
@@ -60,6 +65,10 @@ export default new Vuex.Store({
     },
     getSubTypes({ commit }) {
       return axios(`${url}/subtypes`).then((res) => commit('GET_SUBTYPES', res.data));
+    },
+    getPokeById({ commit }, id) {
+      commit('IS_LOADING');
+      return axios(`${url}/cards/${id}`).then((res) => commit('GET_CARD', res.data));
     },
   },
   modules: {},

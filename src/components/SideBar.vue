@@ -67,12 +67,12 @@ export default {
 
       if (!this.subtypeSelected) {
         this.$router.push({
-          name: 'typePageFiltered',
+          name: 'TypePageFiltered',
           params: { currentType: this.typeSelected },
         });
       } else {
         this.$router.push({
-          name: 'bothTypesPageFiltered',
+          name: 'BothTypesPageFiltered',
           params: {
             currentType: this.typeSelected,
             currentSubType: this.subtypeSelected,
@@ -88,12 +88,12 @@ export default {
 
       if (!this.typeSelected) {
         this.$router.push({
-          name: 'subtypePageFiltered',
+          name: 'SubtypePageFiltered',
           params: { currentSubType: this.subtypeSelected },
         });
       } else {
         this.$router.push({
-          name: 'bothTypesPageFiltered',
+          name: 'BothTypesPageFiltered',
           params: {
             currentType: this.typeSelected,
             currentSubType: this.subtypeSelected,

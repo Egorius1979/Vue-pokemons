@@ -7,14 +7,31 @@
              class="cards__card"
              @click="modal(poke)">
           <img :src="poke.imageUrl" alt="" class="cards__poke-img"/>
-          <p>{{ poke.name }}</p>
+          <p cards__poke-name>{{ poke.name }}</p>
         </div>
         <b-modal v-model="modalShow"
                  :title="modalPoke.name"
+                 header-bg-variant="dark"
+                 header-text-variant="light"
+                 hide-footer
         >
-          <img :src="modalPoke.imageUrl" alt="" class="cards__poke-img"/>
+          <b-row>
+            <b-col>
+              <img :src="modalPoke.imageUrl" alt="" class="cards__poke-img"/>
+            </b-col>
+            <b-col>
+                <p><b>id:</b> {{ modalPoke.id }}</p>
+                <p><b>type:</b> {{modalPoke.types}}</p>
+                <p><b>subtype:</b> {{modalPoke.subtype}}</p>
+                <p><b>series:</b> {{modalPoke.series}}</p>
+                <b-button variant="info"
+                          :to="`/${modalPoke.id}`"
+                >
+                  More details...
+                </b-button>
+            </b-col>
+          </b-row>
         </b-modal>
-
       </div>
       <div v-else class="spin-flex">
         <b-spinner label="Loading..."
@@ -84,6 +101,7 @@ export default {
   }
   p {
     margin: 2px auto;
+    max-width: fit-content;
   }
 }
 .spin-flex {
@@ -96,4 +114,5 @@ export default {
   width: 200px;
   height: 200px;
 }
+
 </style>
