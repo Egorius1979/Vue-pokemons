@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container class="mt-1">
     <div class="list-sidebar">
       <div v-if="hasLoaded" class="cards">
         <div v-for="poke in pokemonsList"
@@ -41,7 +41,7 @@
       <side-bar/>
     </div>
     <pagination/>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -79,19 +79,32 @@ export default {
 .list-sidebar {
   display: flex;
   justify-content: space-around;
+  //background-color: #8B4513;
+  //width: 100vw;
+  //height: 92vh;
+  //margin: auto;
+  //@media (min-width: 1440px) {
+  //  width: 70vw;
+  //}
 }
 
 .cards {
-  width: 65%;
+  width: 70%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  //align-items: stretch;
+  //border-radius: 10px;
+  //background-color: #FFFFE0;
+  //box-shadow: 7px 7px 15px #000;
 
   &__card {
     background-color: lightblue;
     border-radius: 5px;
     margin: 5px;
+    &:hover {
+      box-shadow: 7px 7px 15px #000;
+      background-color: cyan;
+    }
   }
 
   &__poke-img {

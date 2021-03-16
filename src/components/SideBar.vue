@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar shadow p-3 mb-5 bg-info rounded">
+  <div class="sidebar p-3 mb-5 bg-info rounded">
 
     <b-form-select id="type"
                    v-model="typeSelected"
@@ -109,9 +109,10 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-  width: 30%;
+  width: 25%;
   height: 75vh;
   background-color: #4dc0b5;
-  margin-top: 10px;
+  margin: 5px 5px;
+  box-shadow: 7px 7px 15px #000;
 }
 </style>
