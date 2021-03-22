@@ -1,43 +1,44 @@
 <template>
-  <b-container class="mt-1">
+  <b-container class="mt-1" fluid="lg">
     <div class="list-sidebar">
-      <div v-if="hasLoaded" class="cards">
-        <div v-for="poke in pokemonsList"
-             :key="poke.id"
-             class="cards__card"
-             @click="modal(poke)">
-          <img :src="poke.imageUrl" alt="" class="cards__poke-img"/>
-          <p cards__poke-name>{{ poke.name }}</p>
-        </div>
-        <b-modal v-model="modalShow"
-                 :title="modalPoke.name"
-                 header-bg-variant="dark"
-                 header-text-variant="light"
-                 hide-footer
-        >
-          <b-row>
-            <b-col>
-              <img :src="modalPoke.imageUrl" alt="" class="cards__poke-img"/>
-            </b-col>
-            <b-col>
+        <div v-if="hasLoaded" class="cards">
+          <div v-for="poke in pokemonsList"
+               :key="poke.id"
+               class="cards__card"
+               @click="modal(poke)">
+            <img :src="poke.imageUrl" alt="" class="cards__poke-img"/>
+            <p cards__poke-name>{{ poke.name }}</p>
+          </div>
+          <b-modal v-model="modalShow"
+                   :title="modalPoke.name"
+                   header-bg-variant="dark"
+                   header-text-variant="light"
+                   hide-footer
+          >
+            <b-row>
+              <b-col>
+                <img :src="modalPoke.imageUrl" alt="" class="cards__poke-img"/>
+              </b-col>
+              <b-col>
                 <p><b>id:</b> {{ modalPoke.id }}</p>
                 <p><b>type:</b> {{modalPoke.types}}</p>
-                <p><b>subtype:</b> {{modalPoke.subtype}}</p>
-                <p><b>series:</b> {{modalPoke.series}}</p>
+                <p><b>subtype:</b> "{{modalPoke.subtype}}"</p>
+                <p><b>series:</b> "{{modalPoke.series}}"</p>
                 <b-button variant="info"
                           :to="`/${modalPoke.id}`"
                 >
                   More details...
                 </b-button>
-            </b-col>
-          </b-row>
-        </b-modal>
-      </div>
-      <div v-else class="spin-flex">
-        <b-spinner label="Loading..."
-                   class="spinner"
-        />
-      </div>
+              </b-col>
+            </b-row>
+          </b-modal>
+        </div>
+        <div v-else-if="error" class="mt-3 text-center">{{error}}</div>
+        <div v-else class="spin-flex">
+          <b-spinner label="Loading..."
+                     class="spinner"
+          />
+        </div>
       <side-bar/>
     </div>
     <pagination/>
@@ -64,6 +65,9 @@ export default {
     hasLoaded() {
       return this.$store.state.hasLoaded;
     },
+    error() {
+      return this.$store.state.error;
+    },
   },
   methods: {
     modal(poke) {
@@ -78,24 +82,24 @@ export default {
 <style lang="scss" scoped>
 .list-sidebar {
   display: flex;
-  justify-content: space-around;
-  //background-color: #8B4513;
-  //width: 100vw;
-  //height: 92vh;
-  //margin: auto;
-  //@media (min-width: 1440px) {
-  //  width: 70vw;
-  //}
+  flex-direction: column-reverse;
+  @media (min-width: 576px) {
+    flex-direction: row;
+    justify-content: space-around;
+  }
 }
 
 .cards {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  //border-radius: 10px;
-  //background-color: #FFFFE0;
-  //box-shadow: 7px 7px 15px #000;
+  @media (min-width: 576px) {
+    width: 65%;
+  }
+  @media (min-width: 992px) {
+    width: 70%;
+  }
 
   &__card {
     background-color: lightblue;
@@ -108,9 +112,12 @@ export default {
   }
 
   &__poke-img {
-    height: 250px;
+    height: 220px;
     width: auto;
     cursor: pointer;
+    @media (min-width: 720px) {
+      height: 250px;
+    }
   }
   p {
     margin: 2px auto;

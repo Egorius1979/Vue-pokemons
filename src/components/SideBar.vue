@@ -1,10 +1,11 @@
 <template>
-  <div class="sidebar p-3 mb-5 bg-info rounded">
+  <div class="sidebar p-3 mb-5 rounded">
 
     <b-form-select id="type"
                    v-model="typeSelected"
                    @change="setCurrentType"
                    :options="typesList"
+                   class="sidebar__select"
     >
       <template #first>
         <b-form-select-option :value="null" disabled>
@@ -15,7 +16,7 @@
 
     <b-form-select id="subtype"
                    v-model="subtypeSelected"
-                   class="mt-3"
+                   class="sidebar__select mt-3"
                    @change="setCurrentSubType"
                    :options="subTypesList"
     >
@@ -109,10 +110,27 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-  width: 25%;
-  height: 75vh;
-  background-color: #4dc0b5;
-  margin: 5px 5px;
-  box-shadow: 7px 7px 15px #000;
+  width: 100%;
+  margin: auto;
+  @media (min-width: 576px) {
+    width: 35%;
+    height: 75vh;
+    margin: 5px 5px;
+    background-color: #4dc0b5;
+    box-shadow: 7px 7px 15px #000;
+  }
+  @media (min-width: 992px) {
+    width: 25%;
+  }
+
+  &__select {
+    background: black;
+    color: white;
+    @media (min-width: 576px) {
+      background: white;
+      color: black;
+    }
+  }
+
 }
 </style>

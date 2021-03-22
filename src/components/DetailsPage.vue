@@ -1,16 +1,8 @@
 <template >
   <div class="bg">
     <b-container>
-      <b-card v-if="hasLoaded"
-              :img-src="pokeCard.imageUrlHiRes"
-              img-alt="Image"
-              img-left
-              img-width="40%"
-              img-height="auto"
-              align="left"
-              tag="article"
-              class="card"
-      >
+      <div v-if="hasLoaded" class="card">
+        <img :src="pokeCard.imageUrlHiRes" alt="image" class="card__image">
         <div class="card__details">
           <h2 class="text-center text-primary"><b>"{{pokeCard.name}}"</b></h2>
           <hr color="dark">
@@ -51,8 +43,8 @@
             </span>{{attack.text}}
           </p>
         </div>
-
-      </b-card>
+      </div>
+      <div v-else-if="error" class="mt-3 text-center">{{error}}</div>
       <div v-else class="spin-flex">
         <b-spinner label="Loading..."
                    class="spinner"
@@ -75,13 +67,15 @@ export default {
     pokeCard() {
       return this.$store.state.pokeCard;
     },
+    error() {
+      return this.$store.state.error;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .bg {
-  //background: grey;
   width: 100vw;
   height: 100vh;
 }
@@ -89,11 +83,37 @@ export default {
   padding-top: 5vh;
   background: inherit;
   border: none;
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: start;
+  }
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+
+  &__image {
+    width: 70%;
+    margin: 0 auto;
+    @media (min-width: 768px) {
+      width: 60%;
+    }
+    @media (min-width: 1024px) {
+      width: 40%;
+    }
+  }
 
   &__details {
-    font-size: larger;
-    //color: white;
-    margin-left: 5%;
+    width: 100%;
+    @media (min-width: 768px) {
+      font-size: larger;
+    }
+    @media (min-width: 1024px) {
+      width: 60%;
+      margin-left: 5%;
+    }
   }
 }
 .spin-flex {

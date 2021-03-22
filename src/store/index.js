@@ -18,6 +18,7 @@ export default new Vuex.Store({
     selectedSubtype: null,
     hasLoaded: false,
     pokeCard: {},
+    error: null,
   },
   mutations: {
     GET_POKEMONS(state, res) {
@@ -42,10 +43,14 @@ export default new Vuex.Store({
     },
     IS_LOADING(state) {
       state.hasLoaded = false;
+      state.error = null;
     },
     GET_CARD(state, poke) {
       state.pokeCard = poke.card;
       state.hasLoaded = true;
+    },
+    SET_ERROR(state, error) {
+      state.error = `Упс, что-то пошло не так. ${error}. Пожалуйста, обновите страницу чуть позже`;
     },
   },
   actions: {
@@ -58,7 +63,7 @@ export default new Vuex.Store({
           types: state.selectedType || type,
           subtype: state.selectedSubtype || subtype,
         },
-      }).then((res) => commit('GET_POKEMONS', res));
+      }).then((res) => commit('GET_POKEMONS', res)).catch((err) => commit('SET_ERROR', err));
     },
     getType({ commit }) {
       return axios(`${url}/types`).then((res) => commit('GET_TYPES', res.data));
@@ -68,7 +73,8 @@ export default new Vuex.Store({
     },
     getPokeById({ commit }, id) {
       commit('IS_LOADING');
-      return axios(`${url}/cards/${id}`).then((res) => commit('GET_CARD', res.data));
+      return axios(`${url}/cards/${id}`).then((res) => commit('GET_CARD', res.data))
+        .catch((err) => commit('SET_ERROR', err));
     },
   },
   modules: {},

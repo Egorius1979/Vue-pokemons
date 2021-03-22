@@ -6,7 +6,7 @@
       <h2>page, guys!!!</h2>
     </div>
     <router-link to="/list">
-      <button class="enter-btn">Enter 18+</button>
+      <button class="enter-btn">Enter 6+</button>
     </router-link>
   </div>
 </template>
@@ -24,14 +24,18 @@ export default {
 
 .welcome {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (min-width: 576px) {
+    flex-direction: row;
+  }
 }
 
 .poke-logo {
   width: 50%;
-  margin-bottom: 30px;
-  @media (min-width: 1024px) {
+  @media (min-width: 576px) {
+    margin-bottom: 30px;
     width: auto;
   }
 }
@@ -41,10 +45,13 @@ export default {
   border-radius: 5px;
   margin-top: 50px;
   padding: 20px 60px;
-  font-size: 56px;
+  font-size: 36px;
   outline: black;
   border: 3px solid darkred;
   background-color: #4dc0b5;
+  @media (min-width: 576px) {
+    font-size: 56px;
+  }
 
   &:hover {
     background-color: #7FFFD4;

@@ -4,8 +4,9 @@
     <b-button variant="outline-primary" @click="prev">Назад</b-button>
     <b-button variant="outline-primary" @click="next">Вперёд</b-button>
     <b-button variant="success" @click="toEnd">В конец</b-button>
-<!--    currentPage:  {{ currentPage }}-->
-<!--    totalPages: {{ maxPage }}-->
+    currentPage:  {{ currentPage }}
+    totalPages: {{ maxPage }}
+    route: {{ $route.params }}
 <!--    <b-pagination-nav-->
 <!--      :number-of-pages="maxPage"-->
 <!--      v-model="currentPage"-->
@@ -14,6 +15,7 @@
 <!--      prev-text="Prev"-->
 <!--      next-text="Next"-->
 <!--      last-text="Last"-->
+<!--      use-route-->
 <!--    ></b-pagination-nav>-->
   </div>
 </template>
