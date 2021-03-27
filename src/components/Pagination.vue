@@ -1,31 +1,22 @@
 <template>
   <div class="pagination">
-    <b-button variant="success" @click="toStart">На первую</b-button>
-    <b-button variant="outline-primary" @click="prev">Назад</b-button>
-    <b-button variant="outline-primary" @click="next">Вперёд</b-button>
-    <b-button variant="success" @click="toEnd">В конец</b-button>
-    currentPage:  {{ currentPage }}
-    totalPages: {{ maxPage }}
-    route: {{ $route.params }}
-<!--    <b-pagination-nav-->
-<!--      :number-of-pages="maxPage"-->
-<!--      v-model="currentPage"-->
-<!--      base-url="#"-->
-<!--      first-text="First"-->
-<!--      prev-text="Prev"-->
-<!--      next-text="Next"-->
-<!--      last-text="Last"-->
-<!--      use-route-->
-<!--    ></b-pagination-nav>-->
+    <b-pagination-nav
+      :number-of-pages="maxPage || 1"
+      v-model="currentPage"
+      base-url="?page="
+      first-text="First"
+      prev-text="Prev"
+      next-text="Next"
+      last-text="Last"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: 'Pagination',
-  data() {
-    return {
-    };
+  beforeMount() {
+    this.$store.commit('SET_PAGE', this.$route.query.page || 1);
   },
   computed: {
     maxPage() {
@@ -37,33 +28,7 @@ export default {
       },
       set(page) {
         this.$store.commit('SET_PAGE', page);
-        this.getNewPage(this.currentPage);
       },
-    },
-  },
-  methods: {
-    getNewPage() {
-      this.$store.dispatch('getPokemonList');
-    },
-    toStart() {
-      if (this.currentPage > 1) {
-        this.currentPage = 1;
-      }
-    },
-    prev() {
-      if (this.currentPage > 1) {
-        this.currentPage -= 1;
-      }
-    },
-    next() {
-      if (this.currentPage < this.maxPage) {
-        this.currentPage += 1;
-      }
-    },
-    toEnd() {
-      if (this.currentPage < this.maxPage) {
-        this.currentPage = this.maxPage;
-      }
     },
   },
 };
