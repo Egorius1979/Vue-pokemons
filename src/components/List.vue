@@ -2,6 +2,9 @@
   <b-container class="mt-1" fluid="lg">
     <div class="list-sidebar">
         <div v-if="hasLoaded" class="cards">
+          <div v-if="!pokemonsList.length" class="cards__not-at-all">
+            <p>Нет таких покемонов</p>
+          </div>
           <div v-for="poke in pokemonsList"
                :key="poke.id"
                class="cards__card"
@@ -41,7 +44,7 @@
         </div>
       <side-bar/>
     </div>
-    <pagination/>
+    <pagination />
   </b-container>
 </template>
 
@@ -57,6 +60,9 @@ export default {
       modalShow: false,
       modalPoke: {},
     };
+  },
+  mounted() {
+    this.$store.dispatch('getPokemonList');
   },
   computed: {
     pokemonsList() {
@@ -99,6 +105,15 @@ export default {
   }
   @media (min-width: 992px) {
     width: 70%;
+  }
+
+  &__not-at-all {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    @media (min-width: 992px) {
+      font-size: 36px;
+    }
   }
 
   &__card {
