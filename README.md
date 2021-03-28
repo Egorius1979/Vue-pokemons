@@ -1,7 +1,9 @@
 # Покемоны на Vue.js
 
-Стек: Vue/Vuex/Vue Router/Bootstrap-vue/SCSS
+**Стек: Vue/Vuex/Vue Router/Bootstrap-vue/SCSS**
 
+_API: https://docs.pokemontcg.io_
+***
 ## Project setup
 ```
 yarn install
