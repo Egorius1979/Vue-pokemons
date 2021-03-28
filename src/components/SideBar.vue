@@ -50,9 +50,6 @@ export default {
     this.$store.commit('SET_TYPE', this.$route.params.currentType);
     this.$store.commit('SET_SUBTYPE', this.$route.params.currentSubType);
   },
-  mounted() {
-    this.$store.dispatch('getPokemonList');
-  },
   computed: {
     typesList() {
       return this.$store.state.types;

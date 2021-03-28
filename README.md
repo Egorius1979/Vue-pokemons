@@ -1,4 +1,6 @@
-# vue-new-project
+# Покемоны на Vue.js
+
+Стек: Vue/Vuex/Vue Router/Bootstrap-vue/SCSS
 
 ## Project setup
 ```
