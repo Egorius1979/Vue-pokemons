@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/vue-pokemons/',
+  publicPath: '/Vue-pokemons/',
 };
