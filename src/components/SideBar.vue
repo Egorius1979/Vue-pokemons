@@ -5,7 +5,6 @@
                    v-model="typeSelected"
                    @change="setCurrentType"
                    :options="typesList"
-                   class="sidebar__select"
     >
       <template #first>
         <b-form-select-option :value="null" disabled>
@@ -16,7 +15,7 @@
 
     <b-form-select id="subtype"
                    v-model="subtypeSelected"
-                   class="sidebar__select mt-3"
+                   class="mt-3"
                    @change="setCurrentSubType"
                    :options="subTypesList"
     >
@@ -119,15 +118,5 @@ export default {
   @media (min-width: 992px) {
     width: 25%;
   }
-
-  &__select {
-    background: black;
-    color: white;
-    @media (min-width: 576px) {
-      background: white;
-      color: black;
-    }
-  }
-
 }
 </style>

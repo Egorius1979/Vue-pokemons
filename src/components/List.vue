@@ -1,7 +1,11 @@
 <template>
   <b-container class="mt-1" fluid="lg">
     <div class="list-sidebar">
-        <div v-if="hasLoaded" class="cards">
+        <div v-if="hasLoaded"
+             class="cards"
+             :class="pokemonsList.length > 0 && pokemonsList.length < pokesPerPage
+             ? 'cards-last-page' : ''"
+        >
           <div v-if="!pokemonsList.length" class="cards__not-at-all">
             <p>Нет таких покемонов</p>
           </div>
@@ -74,6 +78,9 @@ export default {
     error() {
       return this.$store.state.error;
     },
+    pokesPerPage() {
+      return this.$store.state.pokesPerPage;
+    },
   },
   methods: {
     modal(poke) {
@@ -86,6 +93,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$black: #000;
+
 .list-sidebar {
   display: flex;
   flex-direction: column-reverse;
@@ -102,9 +111,14 @@ export default {
   justify-content: center;
   @media (min-width: 576px) {
     width: 65%;
+    box-shadow: 7px 7px 15px $black;
   }
   @media (min-width: 992px) {
     width: 70%;
+  }
+
+  &-last-page {
+    align-items: flex-start;
   }
 
   &__not-at-all {
@@ -121,7 +135,7 @@ export default {
     border-radius: 5px;
     margin: 5px;
     &:hover {
-      box-shadow: 7px 7px 15px #000;
+      box-shadow: 7px 7px 15px $black;
       background-color: cyan;
     }
   }

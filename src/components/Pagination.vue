@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination">
+  <div v-if="hasLoaded" class="pagination">
     <b-pagination-nav
       :number-of-pages="maxPage || 1"
       v-model="currentPage"
@@ -8,6 +8,7 @@
       prev-text="Prev"
       next-text="Next"
       last-text="Last"
+      pills
     />
   </div>
 </template>
@@ -29,6 +30,9 @@ export default {
       set(page) {
         this.$store.commit('SET_PAGE', page);
       },
+    },
+    hasLoaded() {
+      return this.$store.state.hasLoaded;
     },
   },
 };
