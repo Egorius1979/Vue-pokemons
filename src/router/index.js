@@ -15,24 +15,24 @@ const routes = [
     name: 'ListPage',
     props: (route) => ({ query: route.query.page }),
     component: () => import('../components/List'),
-  },
-  {
-    path: '/list/type=:currentType',
-    name: 'TypePageFiltered',
-    props: (route) => ({ query: route.query.page }),
-    component: () => import('../components/List'),
-  },
-  {
-    path: '/list/subtype=:currentSubType',
-    name: 'SubtypePageFiltered',
-    props: (route) => ({ query: route.query.page }),
-    component: () => import('../components/List'),
-  },
-  {
-    path: '/list/type=:currentType/subtype=:currentSubType',
-    name: 'BothTypesPageFiltered',
-    props: (route) => ({ query: route.query.page }),
-    component: () => import('../components/List'),
+    children: [{
+      path: 'type=:currentType',
+      name: 'TypePageFiltered',
+      props: (route) => ({ query: route.query.page }),
+      component: () => import('../components/List'),
+    },
+    {
+      path: 'subtype=:currentSubType',
+      name: 'SubtypePageFiltered',
+      props: (route) => ({ query: route.query.page }),
+      component: () => import('../components/List'),
+    },
+    {
+      path: 'type=:currentType/subtype=:currentSubType',
+      name: 'BothTypesPageFiltered',
+      props: (route) => ({ query: route.query.page }),
+      component: () => import('../components/List'),
+    }],
   },
   {
     path: '/:id',
