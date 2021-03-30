@@ -10,6 +10,7 @@
       last-text="Last"
       pills
     />
+    {{$route.query}}
   </div>
 </template>
 
