@@ -3,6 +3,8 @@
 **Стек: Vue/Vuex/Vue Router/Bootstrap-vue/SCSS**
 
 _API: https://docs.pokemontcg.io_
+
+[билд на Heroku](https://vue-pokemons.herokuapp.com/) - скорее всего в настоящий момент находится в спящем состоянии, поэтому загрузится не сразу.
 ***
 ## Project setup
 ```
