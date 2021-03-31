@@ -58,7 +58,9 @@
 export default {
   name: 'DetailsPage',
   mounted() {
-    return this.$store.dispatch('getPokeById', this.$route.params.id);
+    if (this.pokeCard.id !== this.$route.params.id) {
+      this.$store.dispatch('getPokeById', this.$route.params.id);
+    }
   },
   computed: {
     hasLoaded() {

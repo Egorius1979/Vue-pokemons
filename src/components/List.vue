@@ -63,10 +63,16 @@ export default {
     return {
       modalShow: false,
       modalPoke: {},
+      page: 1,
     };
   },
+  beforeMount() {
+    this.page = this.$store.state.currentPage;
+  },
   mounted() {
-    this.$store.dispatch('getPokemonList');
+    if (this.page !== this.$route.query.page) {
+      this.$store.dispatch('getPokemonList');
+    }
   },
   computed: {
     pokemonsList() {
