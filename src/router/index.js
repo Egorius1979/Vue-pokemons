@@ -31,7 +31,7 @@ const routes = [
     }],
   },
   {
-    path: '/:id',
+    path: '/pokemon/:id',
     name: 'DetailsPage',
     component: () => import('../components/DetailsPage'),
   },

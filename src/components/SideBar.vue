@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar p-3 mb-5 rounded">
+  <div class="sidebar p-3 rounded">
 
     <b-form-select id="type"
                    v-model="typeSelected"
@@ -15,7 +15,7 @@
 
     <b-form-select id="subtype"
                    v-model="subtypeSelected"
-                   class="mt-3"
+                   class="mt-4"
                    @change="setCurrentSubType"
                    :options="subTypesList"
     >
@@ -39,15 +39,15 @@ export default {
       subtypeSelected: this.$route.params.currentSubType || null,
     };
   },
-  beforeCreate() {
-    return Promise.all([
-      this.$store.dispatch('getType'),
-      this.$store.dispatch('getSubTypes'),
-    ]);
-  },
   beforeMount() {
-    this.$store.commit('SET_TYPE', this.$route.params.currentType);
-    this.$store.commit('SET_SUBTYPE', this.$route.params.currentSubType);
+    if (!this.isInit) {
+      this.$store.commit('SET_TYPE', this.$route.params.currentType);
+      this.$store.commit('SET_SUBTYPE', this.$route.params.currentSubType);
+      Promise.all([
+        this.$store.dispatch('getType'),
+        this.$store.dispatch('getSubTypes'),
+      ]);
+    }
   },
   computed: {
     typesList() {
@@ -55,6 +55,9 @@ export default {
     },
     subTypesList() {
       return this.$store.state.subtypes;
+    },
+    isInit() {
+      return this.$store.state.isInit;
     },
   },
   methods: {
@@ -76,8 +79,6 @@ export default {
           },
         });
       }
-
-      this.$store.dispatch('getPokemonList');
     },
     setCurrentSubType() {
       this.$store.commit('SET_SUBTYPE', this.subtypeSelected);
@@ -97,8 +98,6 @@ export default {
           },
         });
       }
-
-      this.$store.dispatch('getPokemonList');
     },
   },
 };

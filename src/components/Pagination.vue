@@ -1,14 +1,15 @@
 <template>
-  <div v-if="hasLoaded" class="pagination">
+  <div class="pagination">
     <b-pagination-nav
       :number-of-pages="maxPage || 1"
-      v-model="currentPage"
+      :value="currentPage"
       base-url="?page="
       first-text="First"
       prev-text="Prev"
       next-text="Next"
       last-text="Last"
       pills
+      use-router
     />
   </div>
 </template>
@@ -17,22 +18,19 @@
 export default {
   name: 'Pagination',
   beforeMount() {
-    this.$store.commit('SET_PAGE', this.$route.query.page || 1);
+    if (!this.isInit) {
+      this.$store.commit('SET_PAGE', this.$route.query.page || 1);
+    }
   },
   computed: {
     maxPage() {
       return this.$store.state.totalPages;
     },
-    currentPage: {
-      get() {
-        return this.$store.state.currentPage;
-      },
-      set(page) {
-        this.$store.commit('SET_PAGE', page);
-      },
+    currentPage() {
+      return this.$store.state.currentPage;
     },
-    hasLoaded() {
-      return this.$store.state.hasLoaded;
+    isInit() {
+      return this.$store.state.isInit;
     },
   },
 };

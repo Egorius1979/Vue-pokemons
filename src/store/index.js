@@ -12,6 +12,7 @@ export default new Vuex.Store({
     pokemonsList: [],
     totalPages: 0,
     currentPage: 1,
+    isInit: false,
     types: [],
     subtypes: [],
     selectedType: null,
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     SET_PAGE(state, page) {
       state.currentPage = page;
+    },
+    SET_INITIALIZED(state) {
+      state.isInit = true;
     },
     SET_TYPE(state, type) {
       state.selectedType = type;

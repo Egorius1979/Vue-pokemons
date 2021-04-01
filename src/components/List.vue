@@ -32,7 +32,7 @@
                 <p><b>subtype:</b> "{{modalPoke.subtype}}"</p>
                 <p><b>series:</b> "{{modalPoke.series}}"</p>
                 <b-button variant="info"
-                          :to="`/${modalPoke.id}`"
+                          :to="`/pokemon/${modalPoke.id}`"
                 >
                   More details...
                 </b-button>
@@ -63,14 +63,11 @@ export default {
     return {
       modalShow: false,
       modalPoke: {},
-      page: 1,
     };
   },
-  beforeMount() {
-    this.page = this.$store.state.currentPage;
-  },
   mounted() {
-    if (this.page !== this.$route.query.page) {
+    if (!this.isInit) {
+      this.$store.commit('SET_INITIALIZED');
       this.$store.dispatch('getPokemonList');
     }
   },
@@ -87,11 +84,22 @@ export default {
     pokesPerPage() {
       return this.$store.state.pokesPerPage;
     },
+    isInit() {
+      return this.$store.state.isInit;
+    },
   },
   methods: {
     modal(poke) {
       this.modalPoke = poke;
       this.modalShow = !this.modalShow;
+    },
+  },
+  watch: {
+    $route() {
+      if (this.$route.query.page) {
+        this.$store.commit('SET_PAGE', this.$route.query.page || 1);
+      }
+      this.$store.dispatch('getPokemonList');
     },
   },
 };
@@ -116,8 +124,10 @@ $black: #000;
   flex-wrap: wrap;
   justify-content: center;
   @media (min-width: 576px) {
+    margin-top: 5px;
     width: 65%;
     box-shadow: 7px 7px 15px $black;
+    border-radius: 5px;
   }
   @media (min-width: 992px) {
     width: 70%;
@@ -160,10 +170,17 @@ $black: #000;
   }
 }
 .spin-flex {
-  width: 65%;
+  width: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (min-width: 576px) {
+    width: 65%;
+  }
+  @media (min-width: 992px) {
+    width: 67%;
+  }
 }
 .spinner {
   width: 200px;
