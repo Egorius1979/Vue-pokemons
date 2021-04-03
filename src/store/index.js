@@ -20,6 +20,7 @@ export default new Vuex.Store({
     hasLoaded: false,
     pokeCard: {},
     error: null,
+    isSideBar: false,
   },
   mutations: {
     GET_POKEMONS(state, res) {
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     SET_ERROR(state, error) {
       state.error = `Упс, что-то пошло не так. ${error}. Пожалуйста, обновите страницу чуть позже`;
+    },
+    SET_IS_SIDEBAR(state, value) {
+      state.isSideBar = value;
     },
   },
   actions: {

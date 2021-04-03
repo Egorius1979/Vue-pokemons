@@ -87,6 +87,9 @@ export default {
     isInit() {
       return this.$store.state.isInit;
     },
+    isSideBar() {
+      return this.$store.state.isSideBar;
+    },
   },
   methods: {
     modal(poke) {
@@ -96,10 +99,17 @@ export default {
   },
   watch: {
     $route() {
-      if (this.$route.query.page) {
+      if (this.$route.name !== 'DetailsPage') {
         this.$store.commit('SET_PAGE', this.$route.query.page || 1);
+        if (!this.isSideBar) {
+          this.$store.commit('SET_TYPE', this.$route.params.currentType);
+          this.$store.commit('SET_SUBTYPE', this.$route.params.currentSubType);
+        }
       }
       this.$store.dispatch('getPokemonList');
+      if (this.isSideBar) {
+        this.$store.commit('SET_IS_SIDEBAR', false);
+      }
     },
   },
 };

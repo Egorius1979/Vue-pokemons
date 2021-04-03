@@ -33,12 +33,6 @@
 
 export default {
   name: 'SideBar',
-  data() {
-    return {
-      typeSelected: this.$route.params.currentType || null,
-      subtypeSelected: this.$route.params.currentSubType || null,
-    };
-  },
   beforeMount() {
     if (!this.isInit) {
       this.$store.commit('SET_TYPE', this.$route.params.currentType);
@@ -59,11 +53,26 @@ export default {
     isInit() {
       return this.$store.state.isInit;
     },
+    typeSelected: {
+      get() {
+        return this.$store.state.selectedType || null;
+      },
+      set(type) {
+        this.$store.commit('SET_TYPE', type);
+      },
+    },
+    subtypeSelected: {
+      get() {
+        return this.$store.state.selectedSubtype || null;
+      },
+      set(subType) {
+        this.$store.commit('SET_SUBTYPE', subType);
+      },
+    },
   },
   methods: {
     setCurrentType() {
-      this.$store.commit('SET_TYPE', this.typeSelected);
-      this.$store.commit('SET_PAGE', 1);
+      this.$store.commit('SET_IS_SIDEBAR', true);
 
       if (!this.subtypeSelected) {
         this.$router.push({
@@ -81,8 +90,7 @@ export default {
       }
     },
     setCurrentSubType() {
-      this.$store.commit('SET_SUBTYPE', this.subtypeSelected);
-      this.$store.commit('SET_PAGE', 1);
+      this.$store.commit('SET_IS_SIDEBAR', true);
 
       if (!this.typeSelected) {
         this.$router.push({
