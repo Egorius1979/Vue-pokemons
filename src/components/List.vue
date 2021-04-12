@@ -1,54 +1,61 @@
 <template>
   <b-container class="mt-1" fluid="lg">
     <div class="list-sidebar">
-        <div v-if="hasLoaded"
-             class="cards"
-             :class="pokemonsList.length > 0 && pokemonsList.length < pokesPerPage
+      <div v-if="hasLoaded"
+           class="cards"
+           :class="pokemonsList.length > 0 && pokemonsList.length < pokesPerPage
              ? 'cards-last-page' : ''"
+      >
+        <div v-if="!pokemonsList.length" class="cards__not-at-all">
+          <p>Нет таких покемонов</p>
+        </div>
+        <div v-for="poke in pokemonsList"
+             :key="poke.id"
+             class="cards__card"
+             @click="modal(poke)"
+             :class="isLoad ? 'visible' : 'invisible'"
         >
-          <div v-if="!pokemonsList.length" class="cards__not-at-all">
-            <p>Нет таких покемонов</p>
-          </div>
-          <div v-for="poke in pokemonsList"
-               :key="poke.id"
-               class="cards__card"
-               @click="modal(poke)">
-            <img :src="poke.imageUrl" alt="" class="cards__poke-img"/>
-            <p cards__poke-name>{{ poke.name }}</p>
-          </div>
-          <b-modal v-model="modalShow"
-                   :title="modalPoke.name"
-                   header-bg-variant="dark"
-                   header-text-variant="light"
-                   hide-footer
-          >
-            <b-row>
-              <b-col>
-                <img :src="modalPoke.imageUrl" alt="" class="cards__poke-img"/>
-              </b-col>
-              <b-col>
-                <p><b>id:</b> {{ modalPoke.id }}</p>
-                <p><b>type:</b> {{modalPoke.types}}</p>
-                <p><b>subtype:</b> "{{modalPoke.subtype}}"</p>
-                <p><b>series:</b> "{{modalPoke.series}}"</p>
-                <b-button variant="info"
-                          :to="`/pokemon/${modalPoke.id}`"
-                >
-                  More details...
-                </b-button>
-              </b-col>
-            </b-row>
-          </b-modal>
-        </div>
-        <div v-else-if="error" class="mt-3 text-center">{{error}}</div>
-        <div v-else class="spin-flex">
-          <b-spinner label="Loading..."
-                     class="spinner"
+          <img
+               :src="poke.imageUrl"
+               :alt="poke.title"
+               class="cards__poke-img"
+               @load="loaded"
           />
+          <p cards__poke-name>{{ poke.name }}</p>
         </div>
+        <b-modal v-model="modalShow"
+                 :title="modalPoke.name"
+                 header-bg-variant="dark"
+                 header-text-variant="light"
+                 hide-footer
+        >
+          <b-row>
+            <b-col>
+              <img :src="modalPoke.imageUrl" alt="" class="cards__poke-img"/>
+            </b-col>
+            <b-col>
+              <p><b>id:</b> {{ modalPoke.id }}</p>
+              <p><b>type:</b> {{modalPoke.types}}</p>
+              <p><b>subtype:</b> "{{modalPoke.subtype}}"</p>
+              <p><b>series:</b> "{{modalPoke.series}}"</p>
+              <b-button variant="info"
+                        :to="`/pokemon/${modalPoke.id}`"
+              >
+                More details...
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-modal>
+      </div>
+      <div v-else-if="error" class="mt-3 text-center">{{error}}</div>
+      <div v-else class="spin-flex">
+        <b-spinner label="Loading..."
+                   class="spinner"
+        />
+      </div>
       <side-bar/>
     </div>
-    <pagination />
+    <pagination/>
   </b-container>
 </template>
 
@@ -63,6 +70,8 @@ export default {
     return {
       modalShow: false,
       modalPoke: {},
+      isLoad: false,
+      count: 0,
     };
   },
   mounted() {
@@ -96,9 +105,21 @@ export default {
       this.modalPoke = poke;
       this.modalShow = !this.modalShow;
     },
+    loaded() {
+      if (this.isLoad) {
+        this.isLoad = false;
+        this.count = 0;
+      }
+      this.count += 1;
+      if (this.count === this.pokemonsList.length) {
+        this.isLoad = true;
+      }
+      console.log(this.count, this.pokemonsList.length, this.isLoad);
+    },
   },
   watch: {
     $route() {
+      this.loaded = false;
       if (this.$route.name !== 'DetailsPage') {
         this.$store.commit('SET_PAGE', this.$route.query.page || 1);
         if (!this.isSideBar) {
@@ -160,6 +181,7 @@ $black: #000;
     background-color: lightblue;
     border-radius: 5px;
     margin: 5px;
+
     &:hover {
       box-shadow: 7px 7px 15px $black;
       background-color: cyan;
@@ -174,11 +196,13 @@ $black: #000;
       height: 250px;
     }
   }
+
   p {
     margin: 2px auto;
     max-width: fit-content;
   }
 }
+
 .spin-flex {
   width: 100%;
   height: auto;
@@ -192,9 +216,18 @@ $black: #000;
     width: 67%;
   }
 }
+
 .spinner {
   width: 200px;
   height: 200px;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
 }
 
 </style>
