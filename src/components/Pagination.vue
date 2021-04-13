@@ -8,7 +8,20 @@
       prev-text="Prev"
       next-text="Next"
       last-text="Last"
+      class="d-none d-sm-block"
       pills
+      use-router
+    />
+    <b-pagination-nav
+      :number-of-pages="maxPage || 1"
+      :value="currentPage"
+      base-url="?page="
+      first-text="First"
+      prev-text="Prev"
+      next-text="Next"
+      last-text="Last"
+      class="d-block d-sm-none"
+      size="sm"
       use-router
     />
   </div>

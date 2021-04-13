@@ -1,27 +1,32 @@
 <template>
   <b-container class="mt-1" fluid="lg">
     <div class="list-sidebar">
-      <div v-if="hasLoaded"
+      <div
            class="cards"
            :class="pokemonsList.length > 0 && pokemonsList.length < pokesPerPage
              ? 'cards-last-page' : ''"
       >
-        <div v-if="!pokemonsList.length" class="cards__not-at-all">
+        <div v-if="hasLoaded && !pokemonsList.length" class="cards__not-at-all">
           <p>Нет таких покемонов</p>
         </div>
-        <div v-for="poke in pokemonsList"
-             :key="poke.id"
-             class="cards__card"
-             @click="modal(poke)"
-             :class="isLoad ? 'visible' : 'invisible'"
-        >
-          <img
-               :src="poke.imageUrl"
-               :alt="poke.title"
-               class="cards__poke-img"
-               @load="loaded"
+          <div v-for="poke in pokemonsList"
+               v-show="isLoad"
+               :key="poke.id"
+               class="cards__card"
+               @click="modal(poke)"
+          >
+            <img
+              :src="poke.imageUrl"
+              :alt="poke.title"
+              class="cards__poke-img"
+              @load="imgLoaded"
+            />
+            <p class="cards__card-poke-name">{{ poke.name }}</p>
+          </div>
+        <div v-show="!isLoad && pokemonsList.length" class="spin-flex">
+          <b-spinner label="Loading..."
+                     class="spinner"
           />
-          <p cards__poke-name>{{ poke.name }}</p>
         </div>
         <b-modal v-model="modalShow"
                  :title="modalPoke.name"
@@ -47,12 +52,6 @@
           </b-row>
         </b-modal>
       </div>
-      <div v-else-if="error" class="mt-3 text-center">{{error}}</div>
-      <div v-else class="spin-flex">
-        <b-spinner label="Loading..."
-                   class="spinner"
-        />
-      </div>
       <side-bar/>
     </div>
     <pagination/>
@@ -71,7 +70,7 @@ export default {
       modalShow: false,
       modalPoke: {},
       isLoad: false,
-      count: 0,
+      imgCount: 0,
     };
   },
   mounted() {
@@ -82,7 +81,7 @@ export default {
   },
   computed: {
     pokemonsList() {
-      return this.$store.state.pokemonsList.cards;
+      return this.$store.state.pokemonsList.cards || [];
     },
     hasLoaded() {
       return this.$store.state.hasLoaded;
@@ -105,21 +104,17 @@ export default {
       this.modalPoke = poke;
       this.modalShow = !this.modalShow;
     },
-    loaded() {
-      if (this.isLoad) {
-        this.isLoad = false;
-        this.count = 0;
-      }
-      this.count += 1;
-      if (this.count === this.pokemonsList.length) {
+    imgLoaded() {
+      this.imgCount += 1;
+      if (this.imgCount === this.pokemonsList.length) {
         this.isLoad = true;
       }
-      console.log(this.count, this.pokemonsList.length, this.isLoad);
     },
   },
   watch: {
     $route() {
-      this.loaded = false;
+      this.isLoad = false;
+      this.imgCount = 0;
       if (this.$route.name !== 'DetailsPage') {
         this.$store.commit('SET_PAGE', this.$route.query.page || 1);
         if (!this.isSideBar) {
@@ -154,6 +149,7 @@ $black: #000;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: #808000;
   @media (min-width: 576px) {
     margin-top: 5px;
     width: 65%;
@@ -178,13 +174,20 @@ $black: #000;
   }
 
   &__card {
-    background-color: lightblue;
+    background-color: #2F4F4F;
     border-radius: 5px;
     margin: 5px;
+    color:  white;
+    text-shadow: 2px 2px 4px $black;
 
     &:hover {
-      box-shadow: 7px 7px 15px $black;
-      background-color: cyan;
+      box-shadow: 5px 5px 5px $black;
+      color: #DEB887;
+      font-weight: bold;
+    }
+    &-poke-name {
+      margin: 3px auto;
+      max-width: fit-content;
     }
   }
 
@@ -196,16 +199,11 @@ $black: #000;
       height: 250px;
     }
   }
-
-  p {
-    margin: 2px auto;
-    max-width: fit-content;
-  }
 }
 
 .spin-flex {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -220,14 +218,6 @@ $black: #000;
 .spinner {
   width: 200px;
   height: 200px;
-}
-
-.visible {
-  visibility: visible;
-}
-
-.invisible {
-  visibility: hidden;
 }
 
 </style>
