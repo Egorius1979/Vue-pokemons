@@ -9,6 +9,7 @@
         <div v-if="hasLoaded && !pokemonsList.length" class="cards__not-at-all">
           <p>Нет таких покемонов</p>
         </div>
+        <div v-if="error" class="m-5 text-center text-white">{{error}}</div>
           <div v-for="poke in pokemonsList"
                v-show="isLoad"
                :key="poke.id"
@@ -23,7 +24,7 @@
             />
             <p class="cards__card-poke-name">{{ poke.name }}</p>
           </div>
-        <div v-show="!isLoad && pokemonsList.length" class="spin-flex">
+        <div v-show="!isLoad && pokemonsList.length && !error" class="spin-flex">
           <b-spinner label="Loading..."
                      class="spinner"
           />
