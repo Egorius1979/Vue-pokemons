@@ -24,7 +24,7 @@
           />
           <p class="cards__card-poke-name">{{ poke.name }}</p>
         </div>
-        <div v-if="!isLoad && !error" class="spin-flex">
+        <div v-if="!isLoad && !error && pokemonsList.length || !hasLoaded" class="spin-flex">
           <b-spinner label="Loading..."
                      class="spinner"
           />
