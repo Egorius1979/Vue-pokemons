@@ -10,21 +10,21 @@
           <p>Нет таких покемонов</p>
         </div>
         <div v-if="error" class="m-5 text-center text-white">{{error}}</div>
-          <div v-for="poke in pokemonsList"
-               v-show="isLoad"
-               :key="poke.id"
-               class="cards__card"
-               @click="modal(poke)"
-          >
-            <img
-              :src="poke.imageUrl"
-              :alt="poke.title"
-              class="cards__poke-img"
-              @load="imgLoaded"
-            />
-            <p class="cards__card-poke-name">{{ poke.name }}</p>
-          </div>
-        <div v-show="!isLoad && pokemonsList.length && !error" class="spin-flex">
+        <div v-for="poke in pokemonsList"
+             v-show="isLoad"
+             :key="poke.id"
+             class="cards__card"
+             @click="modal(poke)"
+        >
+          <img
+            :src="poke.imageUrl"
+            :alt="poke.title"
+            class="cards__poke-img"
+            @load="imgLoaded"
+          />
+          <p class="cards__card-poke-name">{{ poke.name }}</p>
+        </div>
+        <div v-if="!isLoad && !error" class="spin-flex">
           <b-spinner label="Loading..."
                      class="spinner"
           />
